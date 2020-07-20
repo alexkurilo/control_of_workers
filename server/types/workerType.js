@@ -22,6 +22,9 @@ const WorkerType = new GraphQLObjectType({
             type: new GraphQLNonNull(GraphQLString),
         },
         lastName: {
+            type: GraphQLString,
+        },
+        surName: {
             type: new GraphQLNonNull(GraphQLString),
         },
         gender: {
