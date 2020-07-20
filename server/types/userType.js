@@ -7,6 +7,8 @@ const {
 
 const WorkerType = require('./workerType');
 const RoleType = require('./roleType');
+const Workers = require('../models/worker');
+const Roles = require('../models/role');
 
 const UserType = new GraphQLObjectType({
     name: 'User',

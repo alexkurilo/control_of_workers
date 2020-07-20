@@ -8,6 +8,9 @@ const {
 const PositionType = require('./positionType');
 const GenderType = require('./genderType');
 const SalaryType = require('./salaryType');
+const Positions = require('../models/position');
+const Salaries = require('../models/salary');
+const Genders = require('../models/gender');
 
 const WorkerType = new GraphQLObjectType({
     name: 'Worker',
