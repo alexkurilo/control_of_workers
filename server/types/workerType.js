@@ -21,7 +21,7 @@ const WorkerType = new GraphQLObjectType({
         firstName: {
             type: new GraphQLNonNull(GraphQLString),
         },
-        lastName: {
+        secondName: {
             type: GraphQLString,
         },
         surName: {

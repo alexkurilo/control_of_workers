@@ -13,7 +13,7 @@ const addWorker = {
         firstName: {
             type: new GraphQLNonNull(GraphQLString),
         },
-        lastName: {
+        secondName: {
             type: GraphQLString,
         },
         surName: {
@@ -38,7 +38,7 @@ const addWorker = {
     resolve(parent, args) {
         const worker = new Workers({
             firstName: args.firstName,
-            lastName: args.lastName,
+            secondName: args.secondName,
             surName: args.surName,
             genderId: args.genderId,
             phone: args.phone,
@@ -73,7 +73,7 @@ const updateWorker = {
         firstName: {
             type: new GraphQLNonNull(GraphQLString),
         },
-        lastName: {
+        secondName: {
             type: GraphQLString,
         },
         surName: {
@@ -101,7 +101,7 @@ const updateWorker = {
             {
                 $set: {
                     firstName: args.firstName,
-                    lastName: args.lastName,
+                    secondName: args.secondName,
                     surName: args.surName,
                     genderId: args.genderId,
                     phone: args.phone,
