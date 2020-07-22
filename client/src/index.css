@@ -1,0 +1,14 @@
+.app {
+  position: relative;
+}
+
+.auth_popup {
+  padding: 1rem;
+  position: absolute;
+  width: 50vw;
+  /*height: 50vh;*/
+  top: 25vh;
+  left: 25vw;
+  /*border: 1px solid black;*/
+  border-radius: 1rem;
+}
