@@ -1,4 +1,4 @@
-const { user, users } = require('./userQueries');
+const { user, users, compareUserData } = require('./userQueries');
 const { worker, workers } = require('./workerQueries');
 const { gender, genders } = require('./genderQueries');
 const { role, roles } = require('./roleQueries');
@@ -10,6 +10,7 @@ const Query = {
     fields: {
         user,
         users,
+        compareUserData,
         worker,
         workers,
         gender,

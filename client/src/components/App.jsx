@@ -4,20 +4,21 @@ import {BrowserRouter} from 'react-router-dom';
 
 import {useRoutes} from '../router/routes';
 
-const App = ({}) => {
+const App = ({role}) => {
 
     return (
-        <div>
-            <BrowserRouter>
-                {useRoutes()}
-            </BrowserRouter>
+        <div className='app'>
             App Component
+            <BrowserRouter>
+                {useRoutes(role)}
+            </BrowserRouter>
         </div>
     );
 };
 
 export default connect(
     (state) => ({
+        role: state.user.role,
     }),
     dispatch => ({
     })

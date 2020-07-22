@@ -1,18 +1,26 @@
 import React from 'react';
 import {Switch, Route, Redirect} from 'react-router-dom';
 
+import AuthPage from '../pages/authPage';
 import HomePage from '../pages/homePage';
 
-export const useRoutes = () => {
+export const useRoutes = (role) => {
     return (
         <Switch>
-            <Route
-                path="/"
-                exact
-            >
-                <HomePage />
-            </Route>
-            <Redirect to="/" />
+            {!role ?
+                <Route
+                    path="/auth"
+                    exact
+                    component={AuthPage}
+                />
+                :
+                <Route
+                    path="/home"
+                    exact
+                    component={HomePage}
+                />
+            }
+            <Redirect to={!role ? "/auth" : "/home"}/>
         </Switch>
     );
 };
