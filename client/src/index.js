@@ -5,8 +5,6 @@ import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import { BrowserRouter } from 'react-router-dom'
 import {composeWithDevTools} from "redux-devtools-extension";
-// import ApolloClient from 'apollo-boost';
-// import { ApolloProvider } from 'react-apollo';
 import {
     ApolloClient,
     InMemoryCache,

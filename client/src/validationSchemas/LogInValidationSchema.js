@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-const LogInUserSchema = Yup.object({
+const LogInValidationSchema = Yup.object({
     login: Yup.string()
         .label('Login')
         .min(6, 'Must be at least 6 characters')
@@ -18,4 +18,4 @@ const LogInUserSchema = Yup.object({
         .required('Password is required'),
 });
 
-export default LogInUserSchema;
+export default LogInValidationSchema;

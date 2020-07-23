@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from "react-redux";
 import { useFormik } from 'formik';
-
 import { makeStyles } from '@material-ui/core/styles';
 import {
     TextField,
@@ -14,27 +13,29 @@ import {
     OutlinedInput,
     MenuItem,
 } from '@material-ui/core';
-import SaveIcon from '@material-ui/icons/Save';
-import WorkerFormSchema from "../validationSchemas/WorkerFormSchema";
+import {
+    Save as SaveIcon,
+    Block as BlockIcon,
+} from '@material-ui/icons';
 import {useQuery, useMutation} from "@apollo/client";
 
+import WorkerValidationSchema from "../validationSchemas/WorkerValidationSchema";
 import {allGenders, allSalaries, allPositions} from "../queries&mutations/queries";
 import {addNewWorker, editWorker} from "../queries&mutations/mutations";
+import {workerFormSchema} from "../formSchemas/formSchemas";
 
 const useStyles = makeStyles(theme => ({
     container: {
         padding: theme.spacing(2),
+        minWidth: 520,
     },
     title: {
         paddingBottom: 0,
+        textAlign: 'center',
     },
     textField: {
         width: '100%',
         marginTop: theme.spacing(2),
-    },
-    formControl: {
-        margin: theme.spacing(),
-        minWidth: 120,
     },
     formControlSelect: {
         marginTop: theme.spacing(2),
@@ -43,67 +44,16 @@ const useStyles = makeStyles(theme => ({
     wrapper: {
         marginTop: theme.spacing(2),
         display: 'flex',
-        justifyContent: 'flex-end',
+        justifyContent: 'center',
     },
     button: {
-        minWidth: 100,
-        minHeight: 48,
+        minWidth: 150,
+        minHeight: 40,
+        marginLeft: theme.spacing(3),
     },
 }));
 
-const FormSchema = [
-    {
-        name: 'firstName',
-        label: 'First Name',
-        type: 'text',
-        isRequired: true,
-    },
-    {
-        name: 'secondName',
-        label: 'Second Name',
-        type: 'text',
-        isRequired: false,
-    },
-    {
-        name: 'surName',
-        label: 'Surname',
-        type: 'text',
-        isRequired: true,
-    },
-    {
-        name: 'gender',
-        label: 'Gender',
-        type: 'select',
-        isRequired: true,
-    },
-    {
-        name: 'phone',
-        label: 'Phone Number',
-        type: 'text',
-        isRequired: true,
-    },
-    {
-        name: 'date',
-        label: 'Birthday date',
-        type: 'text',
-        isRequired: true,
-    },
-    {
-        name: 'salary',
-        label: 'Salary',
-        type: 'select',
-        isRequired: true,
-    },
-    {
-        name: 'position',
-        label: 'Position',
-        type: 'select',
-        isRequired: true,
-    },
-
-];
-
-const WorkerForm = ({ selectedWorker, handleClose, resetSelectWorker , refetchWokers}) => {
+const WorkerForm = ({ selectedWorker, handleClose, resetSelectWorker , refetchWokers }) => {
     const classes = useStyles();
     const { data: dataGenders = {} } = useQuery(allGenders);
     const { data: dataSalaries = {} } = useQuery(allSalaries);
@@ -119,21 +69,16 @@ const WorkerForm = ({ selectedWorker, handleClose, resetSelectWorker , refetchWo
 
     const formik = useFormik({
         initialValues: {
-            id: selectedWorker.id,
-            firstName: selectedWorker.firstName,
-            secondName: selectedWorker.secondName,
-            surName: selectedWorker.surName,
+            ...selectedWorker,
             genderId: selectedWorker.gender.id,
-            phone: selectedWorker.phone,
-            date: selectedWorker.date,
             salaryId: selectedWorker.salary.id,
             positionId: selectedWorker.position.id,
         },
-        validationSchema: WorkerFormSchema,
+        validationSchema: WorkerValidationSchema,
         onSubmit: values => {
-            values.id ?
-                updateWorker({ variables: { ...values } }) :
-                addWorker({ variables: { ...values } });
+            values.id
+                ? updateWorker({ variables: { ...values } })
+                : addWorker({ variables: { ...values } });
             refetchWokers();
             resetSelectWorker();
             handleClose();
@@ -141,6 +86,11 @@ const WorkerForm = ({ selectedWorker, handleClose, resetSelectWorker , refetchWo
     });
 
     const isSelect = item => (item.type === 'select');
+
+    const handleCancel = () => {
+        resetSelectWorker();
+        handleClose();
+    };
 
     return (
         <Dialog
@@ -151,16 +101,16 @@ const WorkerForm = ({ selectedWorker, handleClose, resetSelectWorker , refetchWo
                 className={classes.title}
                 id="simple-dialog-title"
             >
-                Worker information
+                { formik.values.id ? 'Worker information:' : 'New Worker information:' }
             </DialogTitle>
             <form
                 className={classes.container}
                 onSubmit={formik.handleSubmit}
             >
                 {
-                    FormSchema.map((item, index) => (
+                    workerFormSchema.map((item, index) => (
                         isSelect(item) ? (
-                                <div key={index} style={{width: '100%'}}>
+                                <div key={index} >
                                     <FormControl
                                         variant="outlined"
                                         className={classes.formControlSelect}>
@@ -216,9 +166,16 @@ const WorkerForm = ({ selectedWorker, handleClose, resetSelectWorker , refetchWo
                         )
                     )
                 }
-                <div
-                    className={classes.wrapper}
-                >
+                <div className={classes.wrapper}>
+                    <Button
+                        variant="contained"
+                        color='default'
+                        className={classes.button}
+                        onClick={handleCancel}
+                    >
+                        <BlockIcon />
+                        Cancel
+                    </Button>
                     <Button
                         variant="contained"
                         color="primary"

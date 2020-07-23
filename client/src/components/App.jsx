@@ -8,7 +8,6 @@ const App = ({role}) => {
 
     return (
         <div className='app'>
-            App Component
             <BrowserRouter>
                 {useRoutes(role)}
             </BrowserRouter>

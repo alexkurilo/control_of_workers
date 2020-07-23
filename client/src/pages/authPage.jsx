@@ -7,29 +7,9 @@ import { useHistory } from "react-router-dom";
 import {Container, TextField, Button} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import LogInUserSchema from '../validationSchemas/LogInUserSchema';
+import LogInValidationSchema from '../validationSchemas/LogInValidationSchema';
 import { getUserRole } from '../queries&mutations/queries';
-
-const FormSchema = [
-    {
-        name: 'login',
-        label: 'Login',
-        type: 'text',
-        isRequired: true,
-    },
-    {
-        name: 'email',
-        label: 'Email Address',
-        type: 'email',
-        isRequired: true,
-    },
-    {
-        name: 'password',
-        label: 'Password',
-        type: 'password',
-        isRequired: true,
-    }
-];
+import {authFormSchema} from "../formSchemas/formSchemas";
 
 const useStyles = makeStyles(theme => ({
     form: {
@@ -69,7 +49,7 @@ const AuthPage = ({saveRole, role}) => {
             email: '',
             password: '',
         },
-        validationSchema: LogInUserSchema,
+        validationSchema: LogInValidationSchema,
         onSubmit: values => {
             getRole({
                 variables: {
@@ -85,7 +65,7 @@ const AuthPage = ({saveRole, role}) => {
             <Container maxWidth="sm" className="form-container">
                 <form onSubmit={formik.handleSubmit} className='form'>
                     {
-                        FormSchema.map((item, index) => (
+                        authFormSchema.map((item, index) => (
                             <div key={index} style={{width: '100%'}}>
                                 <TextField
                                     required={item.isRequired}

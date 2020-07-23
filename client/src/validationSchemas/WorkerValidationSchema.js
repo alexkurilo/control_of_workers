@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-const LogInUserSchema = Yup.object({
+const WorkerValidationSchema = Yup.object({
     firstName: Yup.string()
         .min(2, 'First Name must be at least 2 characters')
         .max(20, 'First Name must be 20 characters or less')
@@ -33,4 +33,4 @@ const LogInUserSchema = Yup.object({
         .label('Position'),
 });
 
-export default LogInUserSchema;
+export default WorkerValidationSchema;

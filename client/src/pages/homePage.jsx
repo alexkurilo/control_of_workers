@@ -16,8 +16,8 @@ import {
     MoreVert as MoreIcon,
     Delete as DeleteIcon,
     Create as CreateIcon,
+    Add as AddIcon,
 } from '@material-ui/icons';
-
 
 import { allWorkers } from '../queries&mutations/queries';
 import DeletePopUp from "../components/deletePopupComponent";
@@ -25,7 +25,6 @@ import WorkerForm from "../components/workerFormComponent";
 
 const HomePage = ({role, selectWorker, selectedWorker}) => {
     const { data: dataWorkers = {}, refetch: refetchWorkers } = useQuery(allWorkers);
-
     const [ anchorElement, setAnchorElement ] = useState(null);
     const [ openDeletePopUp, setOpenDeletePopUp ] = useState(false);
     const [ openWorkerForm, setOpenWorkerForm ] = useState(false);
@@ -43,18 +42,14 @@ const HomePage = ({role, selectWorker, selectedWorker}) => {
         setOpenWorkerForm(true);
     };
 
-    const handleDelete = () => {
-        setOpenDeletePopUp(true);
-    };
+    const handleDelete = () => setOpenDeletePopUp(true);
 
     const handleClose = () => {
         setAnchorElement(null);
         setOpenDeletePopUp(false);
     };
 
-    const handleCloseForm = () => {
-        setOpenWorkerForm(false);
-    };
+    const handleCloseForm = () => setOpenWorkerForm(false);
 
     return(
         <div>
@@ -62,7 +57,6 @@ const HomePage = ({role, selectWorker, selectedWorker}) => {
                 handleClose={handleCloseForm}
                 refetchWokers={refetchWorkers}
             />}
-
             <DeletePopUp
                 open={openDeletePopUp}
                 handleClose={handleClose}
@@ -71,7 +65,20 @@ const HomePage = ({role, selectWorker, selectedWorker}) => {
             />
             {
                 !!workers.length && (
-                    <Paper >
+                    <Paper>
+                        <div className='form_header'>
+                            <div className='form_header_name'><h2>Workers</h2></div>
+                            <div className='form_header_add'>
+                            { isAdmin() && (
+                                <IconButton
+                                    color="inherit"
+                                    onClick={handleEdit}
+                                >
+                                    <AddIcon />
+                                </IconButton>
+                            ) }
+                            </div>
+                        </div>
                         <Table>
                             <TableHead >
                                 <TableRow>
@@ -82,7 +89,7 @@ const HomePage = ({role, selectWorker, selectedWorker}) => {
                                     <TableCell>Phone</TableCell>
                                     <TableCell>Salary</TableCell>
                                     <TableCell>Position</TableCell>
-                                    { isAdmin() && <TableCell onClick={handleEdit}>Edit</TableCell> }
+                                    { isAdmin() && <TableCell>Edit</TableCell> }
                                 </TableRow>
                             </TableHead>
                             <TableBody>

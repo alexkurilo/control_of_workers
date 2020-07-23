@@ -33,7 +33,6 @@ const DeletePopUp = ({selectedWorker, open, handleClose,resetSelectWorker, refet
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
         >
-            PopUp component
             <DialogTitle id="alert-dialog-title">{"Are you sire that you want to delete element?"}</DialogTitle>
             <DialogContent>
                 <DialogContentText id="alert-dialog-description">
