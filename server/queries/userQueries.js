@@ -4,6 +4,7 @@ const {
     GraphQLString,
     GraphQLBoolean,
 } = require('graphql');
+const bcrypt = require('bcrypt');
 
 const UserType = require('../types/userType');
 const Users = require('../models/user');
@@ -32,16 +33,17 @@ const compareUserData = {
         email: {
             type: GraphQLString,
         },
-        passwordHash: {
+        password: {
             type: GraphQLString,
         }
     },
-    resolve(parent, args) {
-
-        return Users.findOne({
+    async resolve(parent, args) {
+        const user = await Users.findOne({
             email: args.email,
-            passwordHash: args.passwordHash
         });
+        const isMatch = await bcrypt.compareSync(args.password, user.passwordHash);
+
+        return isMatch ? user : null;
     },
 };
 

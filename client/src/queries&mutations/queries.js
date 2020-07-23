@@ -1,8 +1,8 @@
 import { gql } from 'apollo-boost/lib/index';
 
 export const getUserRole = gql`
-    query compareUserData($email: String, $passwordHash: String) {
-        compareUserData(email: $email, passwordHash: $passwordHash) {
+    query compareUserData($email: String, $password: String) {
+        compareUserData(email: $email, password: $password) {
             role{
                 name
             }

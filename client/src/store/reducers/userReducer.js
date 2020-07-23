@@ -1,7 +1,7 @@
 const initialState = {
     // role: 'user',
-    role: 'admin',
-    // role: null,
+    // role: 'admin',
+    role: null,
 };
 
 const userReducer  = (state = initialState, action) => {
