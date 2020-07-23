@@ -54,7 +54,7 @@ const AuthPage = ({saveRole, role}) => {
             getRole({
                 variables: {
                     email: values.email,
-                    passwordHash: values.password,
+                    password: values.password,
                 }
             });
         },
